@@ -3,10 +3,8 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.includes(:user, :comments)
-    render json: @posts.to_json(except: %i[created_at updated_at],
-                                include: { user: { except: %i[created_at updated_at] },
-                                           comments: { except: %i[created_at updated_at], include: { user: { except: %i[created_at updated_at] } } }, likes: { except: %i[created_at updated_at] } })
+    @posts = Post.includes(:user)
+    render json: @posts, includes: %i[desc created_at], methods: %i[image_urls post_user post_comments post_likes], except: [:user_id]
   end
 
   # GET /posts/1
@@ -48,6 +46,6 @@ class PostsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def post_params
-    params.require(:post).permit(:title)
+    params.require(:post).permit(:title, :images)
   end
 end
