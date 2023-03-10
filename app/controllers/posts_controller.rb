@@ -3,9 +3,10 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
-
-    render json: @posts
+    @posts = Post.includes(:user, :comments)
+    render json: @posts.to_json(except: %i[created_at updated_at],
+                                include: { user: { except: %i[created_at updated_at] },
+                                           comments: { except: %i[created_at updated_at], include: { user: { except: %i[created_at updated_at] } } }, likes: { except: %i[created_at updated_at] } })
   end
 
   # GET /posts/1
