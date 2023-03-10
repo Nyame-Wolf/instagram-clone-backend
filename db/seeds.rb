@@ -1,39 +1,38 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+# Users
+users = []
+
 user1 = User.create!(name: 'Vitor', email: 'vgm_rox@hotmail.com', password: 123321)
+user1.image.attach(io: File.open("#{Rails.root}/app/assets/images/users/vitor.jpg"), filename: 'vitor.jpg')
+users << user1
 user2 = User.create!(name: 'Mumenya', email: 'mumenya@hotmail.com', password: 123321)
-user3 = User.create!(name: 'Diego', email: 'diego@hotmail.com', password: 123321)
-user4 = User.create!(name: 'Tiago', email: 'tiago@hotmail.com', password: 123321)
+user2.image.attach(io: File.open("#{Rails.root}/app/assets/images/users/nyame.jpg"), filename: 'nyame.jpg')
+users << user2
 
-post1 = Post.create!(user: user1, title: "Post 1")
-post2 = Post.create!(user: user2, title: "Post 2")
-post3 = Post.create!(user: user3, title: "Post 3")
-post4 = Post.create!(user: user4, title: "Post 4")
+20.times do
+  new_user = User.create!(name: Faker::Name.name, email: Faker::Internet.email(domain: 'example'), password: 123321)
+  new_user.image.attach(io: File.open("#{Rails.root}/app/assets/images/users/vitor.jpg"), filename: 'vitor.jpg')
+  users << new_user
+end
 
-comment1 = Comment.create!(text: "Comment 1", post: post1, user: user1)
-comment2 = Comment.create!(text: "Comment 2", post: post2, user: user2)
-comment3 = Comment.create!(text: "Comment 3", post: post3, user: user3)
-comment4 = Comment.create!(text: "Comment 4", post: post4, user: user4)
+# Posts
+posts = []
 
-Like.create!(post: post1, user: user1)
-Like.create!(post: post1, user: user2)
-Like.create!(post: post1, user: user3)
-Like.create!(post: post1, user: user4)
+40.times do
+  new_post = Post.create!(user: users.sample, title: Faker::Lorem.sentence)
+  new_post.images.attach(io: File.open("#{Rails.root}/app/assets/images/posts/image1.jpg"), filename: 'image1.jpg')
+  posts << new_post
+end
 
-Like.create!(post: post2, user: user1)
-Like.create!(post: post2, user: user2)
-Like.create!(post: post2, user: user3)
+# Comments
+comments = []
 
-Like.create!(post: post3, user: user1)
-Like.create!(post: post3, user: user2)
+80.times do
+  comments << Comment.create!(text: Faker::Lorem.sentence, post: posts.sample, user: users.sample)
+end
 
-Like.create!(post: post4, user: user1)
+# Likes
 
-
-
+80.times do
+  Like.create!(post: posts.sample, user: users.sample)
+end
 
