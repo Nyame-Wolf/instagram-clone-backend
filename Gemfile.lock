@@ -100,6 +100,8 @@ GEM
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)
     erubi (1.12.0)
+    faker (3.1.1)
+      i18n (>= 1.8.11, < 2)
     fast_jsonapi (1.5)
       activesupport (>= 4.2)
     globalid (1.1.0)
@@ -225,6 +227,7 @@ DEPENDENCIES
   devise
   devise-jwt
   dotenv-rails
+  faker
   fast_jsonapi
   pg (~> 1.1)
   puma (~> 5.0)
