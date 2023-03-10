@@ -11,12 +11,11 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  resources :users do 
-    resources :posts do 
-      resources :favorites
-      resources :likes
-      resources :comments
-    end
-  end
+  resources :users
+  resources :posts
+  resources :favorites
+  resources :likes
+  resources :comments
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 end
