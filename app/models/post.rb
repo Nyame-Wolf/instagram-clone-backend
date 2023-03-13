@@ -20,13 +20,10 @@ class Post < ApplicationRecord
 
   def post_user
     image = Rails.application.routes.url_helpers.url_for(user.image) if user.image.attached?
-
     {
       id: user.id,
       name: user.name,
       email: user.email,
-      created_at: user.created_at,
-      updated_at: user.updated_at,
       image:
     }
   end
@@ -34,16 +31,35 @@ class Post < ApplicationRecord
   def post_comments
     comments_arr = []
     comments.each do |comment|
+      comment_replies_arr = []
+      comment.comment_replies.each do |item|
+        new_image = Rails.application.routes.url_helpers.url_for(item.user.image) if item.user.image.attached?
+        comment_replies_arr << {
+          id: item.id,
+          text: item.text,
+          created_at: item.created_at,
+          user: {
+            id: item.user.id,
+            name: item.user.name,
+            email: item.user.email,
+            image: new_image
+          }
+        }
+      end
+
+      comment_image = Rails.application.routes.url_helpers.url_for(comment.user.image) if comment.user.image.attached?
       comments_arr << {
         id: comment.id,
         text: comment.text,
+        created_at: comment.created_at,
         user: {
           id: comment.user.id,
           name: comment.user.name,
           email: comment.user.email,
-          created_at: comment.user.created_at,
-          updated_at: comment.user.updated_at
-        }
+          image: comment_image
+        },
+        comment_likes: comment.comment_likes,
+        comment_replies: comment_replies_arr
       }
     end
     comments_arr
@@ -57,9 +73,7 @@ class Post < ApplicationRecord
         user: {
           id: like.user.id,
           name: like.user.name,
-          email: like.user.email,
-          created_at: like.user.created_at,
-          updated_at: like.user.updated_at
+          email: like.user.email
         }
       }
     end

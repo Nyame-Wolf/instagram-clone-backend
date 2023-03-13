@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :comment_replies, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true,
                    length: { maximum: 30, too_long: '%<count>s characters is the maximum allowed' }
