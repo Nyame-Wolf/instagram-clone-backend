@@ -37,27 +37,27 @@ end
 # Comments
 comments = []
 
-60.times do
+30.times do
   comments << Comment.create!(text: Faker::Lorem.sentence, post: posts.sample, user: users.sample)
 end
 
-60.times do
+20.times do
   comments << Comment.create!(text: "Oh my god, Vitor is so beautiful!", post: posts.sample, user: karla)
 end
 
 # Likes
 
-200.times do
+60.times do
   Like.create!(post: posts.sample, user: users.sample)
 end
 
 # Comment Replies
 comment_replies = []
 
-80.times do 
+30.times do 
   comment_replies << CommentReply.create!(text: Faker::Lorem.sentence, user: users.sample, comment: comments.sample)
 end
 
-200.times do
+30.times do
   CommentLike.create!(comment: comments.sample, user: users.sample)
 end

@@ -47,6 +47,6 @@ class CommentRepliesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def comment_reply_params
-    params.require(:comment_reply).permit(:text)
+    params.require(:comment_reply).permit(:text, :user_id, :comment_id)
   end
 end

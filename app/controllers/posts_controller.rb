@@ -4,12 +4,12 @@ class PostsController < ApplicationController
   # GET /posts
   def index
     @posts = Post.includes(:user)
-    render json: @posts, includes: %i[desc created_at], methods: %i[image_urls post_user post_comments post_likes], except: %i[user_id created_at updated_at]
+    render json: @posts, includes: %i[desc created_at], methods: %i[image_urls post_user post_comments post_likes], except: %i[user_id updated_at]
   end
 
   # GET /posts/1
   def show
-    render json: @post, includes: %i[desc created_at], methods: %i[image_urls post_user post_comments post_likes], except: %i[user_id created_at updated_at]
+    render json: @post, includes: %i[desc created_at], methods: %i[image_urls post_user post_comments post_likes], except: %i[user_id updated_at]
   end
 
   # POST /posts
