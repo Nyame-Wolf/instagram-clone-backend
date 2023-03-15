@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :comment_likes
   get 'current_user/index'
 
   devise_for :users, path: '', path_names: {
@@ -18,6 +17,8 @@ Rails.application.routes.draw do
   resources :likes
   resources :comments
   resources :comment_replies
+  resources :stories
+  resources :comment_likes
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 end
