@@ -1,64 +1,44 @@
 # Users
-vitor = User.create!(name: 'Vitor', email: 'vgm_rox@hotmail.com', password: 123321)
+vitor = User.create!(name: 'Vitor Guedes Madeira', username: "vitorguedes", email: 'vgm_rox@hotmail.com', password: 123321)
 vitor.image.attach(io: File.open("#{Rails.root}/app/assets/images/users/vitor.jpg"), filename: 'vitor.jpg')
 
-mumenya = User.create!(name: 'Mumenya', email: 'mumenya@hotmail.com', password: 123321)
+mumenya = User.create!(name: 'Mumenya Nyame', username: "nyame", email: 'mumenya@hotmail.com', password: 123321)
 mumenya.image.attach(io: File.open("#{Rails.root}/app/assets/images/users/nyame.jpg"), filename: 'nyame.jpg')
 
-tiago = User.create!(name: 'Tiago', email: 'tiago@hotmail.com', password: 123321)
+tiago = User.create!(name: 'Tiago Lelinski', username: "tiagolelinski", email: 'tiago@hotmail.com', password: 123321)
 tiago.image.attach(io: File.open("#{Rails.root}/app/assets/images/users/tiago.jpg"), filename: 'tiago.jpg')
 
-diego = User.create!(name: 'Diego', email: 'diego@hotmail.com', password: 123321)
+diego = User.create!(name: 'Diego Yon', username: "diegoyon", email: 'diego@hotmail.com', password: 123321)
 diego.image.attach(io: File.open("#{Rails.root}/app/assets/images/users/diego.jpg"), filename: 'diego.jpg')
 
-karla = User.create!(name: 'Karla', email: 'karla@hotmail.com', password: 123321)
+karla = User.create!(name: 'Karla Delgado', username: "karlavdelgado", email: 'karla@hotmail.com', password: 123321)
 karla.image.attach(io: File.open("#{Rails.root}/app/assets/images/users/karla.jpg"), filename: 'karla.jpg')
 
-rodrigo = User.create!(name: 'Rodrigo', email: 'rodrigo@hotmail.com', password: 123321)
+rodrigo = User.create!(name: 'Rodrigo Nunes', username: "rodrigonunes69", email: 'rodrigo@hotmail.com', password: 123321)
 rodrigo.image.attach(io: File.open("#{Rails.root}/app/assets/images/users/rodrigo.png"), filename: 'rodrigo.png')
 
-raul = User.create!(name: 'Raul', email: 'raul@hotmail.com', password: 123321)
+raul = User.create!(name: 'Raul Ospina', username: "dirtyboy", email: 'raul@hotmail.com', password: 123321)
 raul.image.attach(io: File.open("#{Rails.root}/app/assets/images/users/raul.jpg"), filename: 'raul.jpg')
 
-aron = User.create!(name: 'Aron', email: 'aron@hotmail.com', password: 123321)
+aron = User.create!(name: 'Aron Abraham', username: "aronetiopia", email: 'aron@hotmail.com', password: 123321)
 aron.image.attach(io: File.open("#{Rails.root}/app/assets/images/users/aron.jpg"), filename: 'aron.jpg')
 
 users = [vitor, mumenya, tiago, diego, karla, rodrigo, raul, aron]
 
 # Posts
 posts = []
+order = 1
+19.times do
+  post = Post.create!(user: users.sample, title: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 5))
+  post.images.attach(io: File.open("#{Rails.root}/app/assets/images/posts/image#{order}.jpg"), filename: "image#{order}.jpg")
+  posts << post
+  order += 1
+end
 
-post1 = Post.create!(user: vitor, title: Faker::Lorem.sentence)
-post1.images.attach(io: File.open("#{Rails.root}/app/assets/images/posts/image1.jpg"), filename: "image1.jpg")
-posts << post1
-
-post2 = Post.create!(user: mumenya, title: Faker::Lorem.sentence)
-post2.images.attach(io: File.open("#{Rails.root}/app/assets/images/posts/image2.jpg"), filename: "image2.jpg")
-posts << post2
-
-post3 = Post.create!(user: tiago, title: Faker::Lorem.sentence)
-post3.images.attach(io: File.open("#{Rails.root}/app/assets/images/posts/image3.jpg"), filename: "image3.jpg")
-posts << post3
-
-post4 = Post.create!(user: diego, title: Faker::Lorem.sentence)
-post4.images.attach(io: File.open("#{Rails.root}/app/assets/images/posts/image4.jpg"), filename: "image4.jpg")
-posts << post4
-
-post5 = Post.create!(user: aron, title: Faker::Lorem.sentence)
-post5.images.attach(io: File.open("#{Rails.root}/app/assets/images/posts/image5.jpg"), filename: "image5.jpg")
-posts << post5
-
-post6 = Post.create!(user: karla, title: Faker::Lorem.sentence)
-post6.images.attach(io: File.open("#{Rails.root}/app/assets/images/posts/image6.jpg"), filename: "image6.jpg")
-posts << post6
-
-post7 = Post.create!(user: rodrigo, title: Faker::Lorem.sentence)
-post7.images.attach(io: File.open("#{Rails.root}/app/assets/images/posts/image7.jpg"), filename: "image7.jpg")
-posts << post7
-
-post8 = Post.create!(user: raul, title: Faker::Lorem.sentence)
-post8.images.attach(io: File.open("#{Rails.root}/app/assets/images/posts/image8.jpg"), filename: "image8.jpg")
-posts << post8
+8.times do
+  post = posts.sample
+  post.images.attach(io: File.open("#{Rails.root}/app/assets/images/posts/image1.jpg"), filename: "image1.jpg")
+end
 
 # Comments
 comments = []

@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.includes(:user)
+    @posts = Post.includes(:user, :comments, :likes, :favorites)
     render json: @posts, includes: %i[desc created_at], methods: %i[image_urls post_user post_comments post_likes], except: %i[user_id updated_at]
   end
 
@@ -41,7 +41,7 @@ class PostsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.includes(:user, :comments, :likes).find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

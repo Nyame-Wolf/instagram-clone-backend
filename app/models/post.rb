@@ -9,66 +9,58 @@ class Post < ApplicationRecord
             length: { maximum: 2200, too_long: '%<count>s characters is the maximum allowed' }
 
   def image_urls
-    if images.attached?
-      images = []
-      self.images.each do |image|
-        images << Rails.application.routes.url_helpers.url_for(image)
-      end
-    end
-    images
+    images.attached? ? images.map { |image| Rails.application.routes.url_helpers.url_for(image) } : []
   end
 
   def post_user
+    user = User.includes(:image_attachment).find_by(id: user_id)
     image = Rails.application.routes.url_helpers.url_for(user.image) if user.image.attached?
     {
       id: user.id,
       name: user.name,
+      username: user.username,
       email: user.email,
       image:
     }
   end
 
   def post_comments
-    comments_arr = []
-    comments.each do |comment|
-      comment_replies_arr = []
-      comment.comment_replies.each do |item|
-        new_image = Rails.application.routes.url_helpers.url_for(item.user.image) if item.user.image.attached?
-        comment_replies_arr << {
+    comments.includes(user: { image_attachment: :blob }, comment_replies: { user: { image_attachment: :blob } }).map do |comment|
+      comment_replies_arr = comment.comment_replies.map do |item|
+        {
           id: item.id,
           text: item.text,
           created_at: item.created_at,
           user: {
             id: item.user.id,
             name: item.user.name,
+            username: item.user.username,
             email: item.user.email,
-            image: new_image
+            image: item.user.image.attached? ? Rails.application.routes.url_helpers.url_for(item.user.image) : nil
           }
         }
       end
 
-      comment_image = Rails.application.routes.url_helpers.url_for(comment.user.image) if comment.user.image.attached?
-      comments_arr << {
+      {
         id: comment.id,
         text: comment.text,
         created_at: comment.created_at,
         user: {
           id: comment.user.id,
           name: comment.user.name,
+          username: comment.user.username,
           email: comment.user.email,
-          image: comment_image
+          image: comment.user.image.attached? ? Rails.application.routes.url_helpers.url_for(comment.user.image) : nil
         },
         comment_likes: comment.comment_likes,
         comment_replies: comment_replies_arr
       }
     end
-    comments_arr
   end
 
   def post_likes
-    likes_arr = []
-    likes.each do |like|
-      likes_arr << {
+    likes.includes(:user).map do |like|
+      {
         id: like.id,
         user: {
           id: like.user.id,
@@ -77,6 +69,5 @@ class Post < ApplicationRecord
         }
       }
     end
-    likes_arr
   end
 end
