@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
 
   def update_allowed_parameters
     devise_parameter_sanitizer.permit(:sign_up) do |u|
-      u.permit(:name, :email, :password)
+      u.permit(:name, :email, :password, :username)
     end
     devise_parameter_sanitizer.permit(:account_update) do |u|
       u.permit(:name, :email, :password, :current_password)
